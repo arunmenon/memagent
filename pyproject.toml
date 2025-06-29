@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "MemAgent"
+version = "0.1.0"
+description = "A recreation of the mem0 project."
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+openai = "^1.12.0"
+neo4j = "^5.17.0"
+numpy = "^1.26.4"
+fastapi = "^0.110.0"
+uvicorn = "^0.29.0"
+pydantic-settings = "^2.0.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.4"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
