@@ -25,11 +25,13 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           model: "claude-3-7-sonnet-20250219"
-          max_turns: 15  # Allow multiple turns for thorough review
+          max_turns: 30  # Allow sufficient turns for thorough review
           timeout_minutes: 30
           
           direct_prompt: |
             Please review this pull request for the MemAgent project.
+            
+            IMPORTANT: Read all necessary files first before posting your review. Batch your file reads efficiently.
             
             Focus on:
             1. **Code Quality**: PEP 8 compliance, type hints, docstrings
@@ -46,5 +48,5 @@ jobs:
             - All public methods need comprehensive docstrings
             - ChromaDB operations in SQLiteProvider should be efficient
             
-            Provide specific, actionable feedback with code suggestions where appropriate.
+            After reading all files, provide ONE comprehensive review with specific, actionable feedback and code suggestions.
             Be constructive and educational in your review comments.
