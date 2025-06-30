@@ -1,4 +1,4 @@
-name: Claude Auto Review
+name: Claude Auto Review [DISABLED]
 
 permissions:
   contents: read
@@ -7,11 +7,12 @@ permissions:
   id-token: write
 
 on:
-  pull_request:
-    types: [opened, synchronize]
-    paths:
-      - 'MemAgent/**/*.py'  # Only review Python files in MemAgent directory
-      - 'tests/**/*.py'     # And test files
+  workflow_dispatch:  # Only run manually
+  # pull_request:
+  #   types: [opened, synchronize]
+  #   paths:
+  #     - 'MemAgent/**/*.py'  # Only review Python files in MemAgent directory
+  #     - 'tests/**/*.py'     # And test files
 
 jobs:
   auto-review:

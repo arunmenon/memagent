@@ -1,4 +1,4 @@
-name: Claude PR Assistant
+name: Claude PR Assistant [DISABLED]
 
 permissions:
   contents: write
@@ -7,14 +7,15 @@ permissions:
   id-token: write
 
 on:
-  issue_comment:
-    types: [created]
-  pull_request_review_comment:
-    types: [created]
-  issues:
-    types: [opened, assigned]
-  pull_request:
-    types: [labeled]  # Also trigger when 'claude' label is added
+  workflow_dispatch:  # Only run manually
+  # issue_comment:
+  #   types: [created]
+  # pull_request_review_comment:
+  #   types: [created]
+  # issues:
+  #   types: [opened, assigned]
+  # pull_request:
+  #   types: [labeled]  # Also trigger when 'claude' label is added
 
 jobs:
   claude-pr:
