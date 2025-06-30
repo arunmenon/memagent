@@ -24,7 +24,7 @@ jobs:
       - uses: anthropics/claude-code-action@beta
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          model: "claude-3-opus-20240229"
+          model: "claude-3-7-sonnet-20250219"
           max_turns: 30  # Allow sufficient turns for thorough review
           timeout_minutes: 30
           
