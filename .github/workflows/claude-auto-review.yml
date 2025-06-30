@@ -20,7 +20,7 @@ jobs:
         with:
           fetch-depth: 0  # Full history for better context
 
-      - uses: anthropics/claude-code-action@v1
+      - uses: anthropics/claude-code-action@beta
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           model: "claude-3-7-sonnet-20250219"
