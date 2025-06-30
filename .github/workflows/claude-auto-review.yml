@@ -1,0 +1,49 @@
+name: Claude Auto Review
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - 'MemAgent/**/*.py'  # Only review Python files in MemAgent directory
+      - 'tests/**/*.py'     # And test files
+
+jobs:
+  auto-review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for better context
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          model: "claude-3-7-sonnet-20250219"
+          max_turns: 1  # Single review pass
+          timeout_minutes: 30
+          
+          direct_prompt: |
+            Please review this pull request for the MemAgent project.
+            
+            Focus on:
+            1. **Code Quality**: PEP 8 compliance, type hints, docstrings
+            2. **Architecture**: Adherence to Protocol-based design patterns
+            3. **Memory Operations**: Ensure proper use of infer() method
+            4. **Async/Sync**: Check for proper async/sync method usage
+            5. **Testing**: Verify tests are included for new functionality
+            6. **Security**: No exposed API keys or sensitive data
+            7. **Performance**: Identify potential bottlenecks
+            
+            Specific MemAgent checks:
+            - Memory importance scores should be 1-10
+            - Provider implementations must follow MemoryProvider protocol
+            - All public methods need comprehensive docstrings
+            - ChromaDB operations in SQLiteProvider should be efficient
+            
+            Provide specific, actionable feedback with code suggestions where appropriate.
+            Be constructive and educational in your review comments.
