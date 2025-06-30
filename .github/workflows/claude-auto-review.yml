@@ -25,7 +25,7 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           model: "claude-3-7-sonnet-20250219"
-          max_turns: 1  # Single review pass
+          max_turns: 15  # Allow multiple turns for thorough review
           timeout_minutes: 30
           
           direct_prompt: |
