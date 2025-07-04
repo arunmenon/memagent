@@ -1,0 +1,53 @@
+name: Claude Auto Review [DISABLED]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+  id-token: write
+
+on:
+  workflow_dispatch:  # Only run manually
+  # pull_request:
+  #   types: [opened, synchronize]
+  #   paths:
+  #     - 'MemAgent/**/*.py'  # Only review Python files in MemAgent directory
+  #     - 'tests/**/*.py'     # And test files
+
+jobs:
+  auto-review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for better context
+
+      - uses: anthropics/claude-code-action@beta
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          model: "claude-opus-4-20250514"
+          max_turns: 30  # Allow sufficient turns for thorough review
+          timeout_minutes: 30
+          
+          direct_prompt: |
+            Please review this pull request for the MemAgent project.
+            
+            IMPORTANT: Read all necessary files first before posting your review. Batch your file reads efficiently.
+            
+            Focus on:
+            1. **Code Quality**: PEP 8 compliance, type hints, docstrings
+            2. **Architecture**: Adherence to Protocol-based design patterns
+            3. **Memory Operations**: Ensure proper use of infer() method
+            4. **Async/Sync**: Check for proper async/sync method usage
+            5. **Testing**: Verify tests are included for new functionality
+            6. **Security**: No exposed API keys or sensitive data
+            7. **Performance**: Identify potential bottlenecks
+            
+            Specific MemAgent checks:
+            - Memory importance scores should be 1-10
+            - Provider implementations must follow MemoryProvider protocol
+            - All public methods need comprehensive docstrings
+            - ChromaDB operations in SQLiteProvider should be efficient
+            
+            After reading all files, provide ONE comprehensive review with specific, actionable feedback and code suggestions.
+            Be constructive and educational in your review comments.
